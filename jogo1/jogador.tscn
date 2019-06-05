@@ -16,7 +16,6 @@ radius = 15.2398
 height = 29.3853
 
 [node name="jogador" type="Area2D"]
-editor/display_folded = true
 script = ExtResource( 1 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
@@ -36,3 +35,4 @@ margin_bottom = 57.0667
 __meta__ = {
 "_edit_group_": true
 }
+[connection signal="body_entered" from="." to="." method="_on_jogador_body_entered"]

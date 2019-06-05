@@ -1,0 +1,33 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://CanvasLayer.gd" type="Script" id=1]
+
+[node name="CanvasLayer" type="CanvasLayer"]
+script = ExtResource( 1 )
+
+[node name="pontuacao" type="Label" parent="."]
+margin_left = 219.566
+margin_top = 14.1852
+margin_right = 263.566
+margin_bottom = 90.1852
+text = "0"
+
+[node name="Button" type="Button" parent="."]
+margin_left = 220.683
+margin_top = 521.209
+margin_right = 280.683
+margin_bottom = 541.209
+text = "iniciar"
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="mensagem" type="Label" parent="."]
+margin_left = 240.496
+margin_top = 331.824
+margin_right = 351.496
+margin_bottom = 345.824
+text = "desvie dos bichis"
+[connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

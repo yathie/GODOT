@@ -1,5 +1,5 @@
 extends Area2D
-
+signal relou #para detectar quando o jogador eh tingido por um inimigo
 
 export var velocidade = 400  # How fast the player will move (pixels/sec).
 var tamanhoTela  # Size of the game window.
@@ -35,14 +35,17 @@ func _process(delta):
 		$AnimatedSprite.flip_h = movimento.x<0
 	elif movimento.y !=0:
 		$AnimatedSprite.flip_v = movimento.y>0
+
+#sinal emitido quando um corpo entra em contato com o jogador
+func _on_jogador_body_entered(body): 
+	hide()
+	emit_signal("relou")
+	#abaixo, eh desativada as proximas colisoes, para que o sinal "relou" nao seja emitido novamente
+	$CollisionShape2D.set_deferred("disabled", true)
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+#reiniciar o jogador, numa proxima partida
+func start(pos):
+	position = pos
+	show()
+	$CollisionShape2D.disabled = false
+

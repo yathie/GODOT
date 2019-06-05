@@ -1,0 +1,48 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Main.gd" type="Script" id=1]
+[ext_resource path="res://inimigo.tscn" type="PackedScene" id=2]
+[ext_resource path="res://jogador.tscn" type="PackedScene" id=3]
+[ext_resource path="res://CanvasLayer.tscn" type="PackedScene" id=4]
+
+[sub_resource type="Curve2D" id=1]
+_data = {
+"points": PoolVector2Array(  )
+}
+
+[node name="Main" type="Node"]
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_horizontal_guides_": [ 719.961, -1.04318 ],
+"_edit_vertical_guides_": [ 0.780365, 480.945 ]
+}
+inimigo = ExtResource( 2 )
+
+[node name="jogador" parent="." instance=ExtResource( 3 )]
+
+[node name="CanvasLayer" parent="." instance=ExtResource( 4 )]
+
+[node name="posicaoInicial" type="Position2D" parent="."]
+position = Vector2( 240, 450 )
+
+[node name="gerarInimigo" type="Timer" parent="."]
+wait_time = 0.5
+
+[node name="atualizaPontuacao" type="Timer" parent="."]
+
+[node name="comecarJogo" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="caminhoInimigo" type="Path2D" parent="."]
+position = Vector2( 0, -1.03532 )
+scale = Vector2( 1, 0.999527 )
+curve = SubResource( 1 )
+
+[node name="localGerarInimigo" type="PathFollow2D" parent="caminhoInimigo"]
+position = Vector2( -1.03949, -0.884155 )
+[connection signal="relou" from="jogador" to="." method="fimJogo"]
+[connection signal="iniciarGame" from="CanvasLayer" to="." method="novoJogo"]
+[connection signal="timeout" from="gerarInimigo" to="." method="_on_gerarInimigo_timeout"]
+[connection signal="timeout" from="atualizaPontuacao" to="." method="_on_atualizaPontuacao_timeout"]
+[connection signal="timeout" from="comecarJogo" to="." method="_on_comecarJogo_timeout"]
