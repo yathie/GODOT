@@ -4,6 +4,10 @@ extends Area2D
 export var velocidade = 400  # How fast the player will move (pixels/sec).
 var tamanhoTela  # Size of the game window.
 
+func _ready():
+	tamanhoTela = get_viewport().size
+	hide()
+	
 func _process(delta):
 	var movimento = Vector2() #movimento do jogador eh um vetor
 	if Input.is_action_pressed("ui_right"):
@@ -16,8 +20,29 @@ func _process(delta):
 		movimento.y -= 1 #pressionar para baixo
 		
 	if movimento.length() > 0:
-		$Sprite.move_child(self, movimento = movimento.normalized()*velocidade)
+		movimento = movimento.normalized()*velocidade
+		$AnimatedSprite.play()
 	else:
+		$AnimatedSprite.stop()
 		
-		
-
+	position += movimento*delta
+	$Label.text = str(position.x)
+	position.x = clamp(position.x, 0, tamanhoTela.x) #clamp limita a posicao do jogador, no caso, para ficar dentro do tamaho da tela
+	position.y = clamp(position.y, 0, tamanhoTela.y)
+	
+	#"animacao do jogador"
+	if movimento.x !=0:
+		$AnimatedSprite.flip_h = movimento.x<0
+	elif movimento.y !=0:
+		$AnimatedSprite.flip_v = movimento.y>0
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
